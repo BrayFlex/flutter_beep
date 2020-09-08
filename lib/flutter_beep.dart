@@ -14,7 +14,7 @@ class SystemSound {
     var args = <String, dynamic>{"soundId": soundId};
     await _channel.invokeMethod('stopSysSound'); // might only work on android by default?
     await _channel.invokeMethod('playSysSound', args);
-    if (msDuration > 0) {
+    if (msDuration != null && msDuration > 0) {
       sleep(Duration(milliseconds: msDuration));
       await _channel.invokeMethod('stopSysSound');
     }
@@ -33,7 +33,7 @@ class SystemSound {
       soundId = success ? 1256 : 1257;
     else
       soundId = -1; // Platform.isFuchsia || Platform.isLinux || Platform.isMacOS || Platform.isWindows
-    return msDuration > 0 ? playSysSound(soundId, msDuration: msDuration) : playSysSound(soundId);
+    return (msDuration != null && msDuration > 0) ? playSysSound(soundId, msDuration: msDuration) : playSysSound(soundId);
   }
 }
 
